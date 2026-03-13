@@ -88,8 +88,8 @@ export default function Home () {
                     <div className="about-card-l">Expert-led events since launch</div>
                   </div>
                   <div className="about-card">
-                    <div className="about-card-n">1<em>st</em></div>
-                    <div className="about-card-l">AWS Cloud Club in Pune, est. Feb 2026</div>
+                    <div className="about-card-n">AWS<em>+</em></div>
+                    <div className="about-card-l">Official Cloud Club at ADYPSOE</div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -116,6 +116,24 @@ export default function Home () {
               <ScrollReveal delay={100}>
                 <div className="ev-card">
                   <div className="ev-badge badge-go">Confirmed</div>
+                  <div className="ev-date">📅 March 28, 2026</div>
+                  <div className="ev-title">MoltBot / ClawDBot: Run Your Own AI Agent</div>
+                  <div className="ev-desc">
+                    Hands-on workshop: Deploy and run your own autonomous AI agent on Amazon EC2.
+                    Learn how to manage compute resources for AI workloads.
+                  </div>
+                  <a
+                    href="mailto:awsadypsoe@gmail.com"
+                    className="ev-link"
+                  >
+                    Register Interest →
+                  </a>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={200}>
+                <div className="ev-card">
+                  <div className="ev-badge badge-go">Confirmed</div>
                   <div className="ev-date">📅 March 21, 2026</div>
                   <div className="ev-title">AWS Community Day Pune 2026</div>
                   <div className="ev-desc">
@@ -133,7 +151,7 @@ export default function Home () {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={200}>
+              <ScrollReveal delay={300}>
                 <div className="ev-card soon">
                   <div className="ev-badge badge-soon">Coming Soon</div>
                   <div className="ev-date">📅 April 2026</div>
@@ -141,21 +159,6 @@ export default function Home () {
                   <div className="ev-desc">
                     From zero to serverless — a hands-on session on Lambda, API Gateway,
                     and event-driven architectures.
-                  </div>
-                  <a href="mailto:awsadypsoe@gmail.com" className="ev-link">
-                    Register Interest →
-                  </a>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={300}>
-                <div className="ev-card soon">
-                  <div className="ev-badge badge-soon">Coming Soon</div>
-                  <div className="ev-date">📅 TBA</div>
-                  <div className="ev-title">VPC &amp; Networking on AWS</div>
-                  <div className="ev-desc">
-                    Subnets, routing, security groups — understand the backbone of cloud
-                    infrastructure from the ground up.
                   </div>
                   <a href="mailto:awsadypsoe@gmail.com" className="ev-link">
                     Register Interest →
