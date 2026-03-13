@@ -250,10 +250,13 @@ a, button, input { user-select: auto; }
   font-weight: 900; line-height: 1.0;
   letter-spacing: -3px; color: var(--text-primary);
   margin-bottom: 28px;
-  text-shadow: 0 4px 60px rgba(0,0,0,0.3);
+  /* Thin, almost invisible border protects text from fluid dissolve */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  text-shadow: 0 4px 60px rgba(0,0,0,0.5);
 }
 [data-theme="light"] .hero-h1 {
   text-shadow: none;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
 }
 .hero-h1 .purple { color: var(--purple2); }
 
