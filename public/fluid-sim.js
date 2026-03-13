@@ -527,9 +527,19 @@ function update() {
     step(dt); render(); requestAnimationFrame(update);
 }
 
+// --- INTERACTION HINT ---
+function hideHint() {
+    let hint = document.getElementById('fluid-hint');
+    if (hint && hint.style.opacity !== '0') {
+        hint.style.opacity = '0';
+        setTimeout(() => { if (hint) hint.remove(); }, 1000);
+    }
+}
+
 // --- INPUTS ---
 
 window.addEventListener('mousedown', e => {
+    hideHint();
     let p = pointers[0]; p.down = true; p.moved = false;
     p.texcoordX = e.clientX / window.innerWidth;
     p.texcoordY = 1.0 - e.clientY / window.innerHeight;
@@ -550,6 +560,7 @@ window.addEventListener('mousemove', e => {
 window.addEventListener('mouseup', () => { pointers[0].down = false; });
 
 window.addEventListener('touchstart', e => {
+    hideHint();
     const t = e.targetTouches[0]; let p = pointers[0]; p.down = true; p.moved = false;
     p.texcoordX = t.clientX / window.innerWidth;
     p.texcoordY = 1.0 - t.clientY / window.innerHeight;
@@ -571,11 +582,16 @@ window.addEventListener('touchend', () => { pointers[0].down = false; });
 
 // --- INTRO ANIMATION ---
 
+// --- INTRO ANIMATION ---
+
 function introSwipe() {
-    const purple = PALETTE[0];
+    const color1 = PALETTE[0]; // Purple
+    const color2 = PALETTE[2]; // Cyan (matches AWS light blue)
     let startTime = Date.now();
     const duration = 2000; // Slow, 2-second glide
-    let prevX = 0;
+    
+    let prevX1 = 0, prevY1 = 0;
+    let prevX2 = 0, prevY2 = 0;
 
     function animate() {
         let now = Date.now();
@@ -585,23 +601,57 @@ function introSwipe() {
         // Smooth cubic ease-out
         let easedT = 1 - Math.pow(1 - t, 3);
 
-        let x = -0.30 + easedT * 0.8; // Start further left, glide 20% further
-        let y = 0.5; // Straight horizontal line
+        // Glide 1: Left to Center (angled slightly down)
+        let x1 = -0.25 + easedT * 0.70; // Ends at 0.45
+        let y1 = 0.40 + easedT * 0.10;  // Ends at 0.50
+        
+        // Glide 2: Right-Bottom to Center (angled slightly up)
+        let x2 = 1.25 - easedT * 0.70;  // Ends at 0.55
+        let y2 = 0.75 - easedT * 0.25;  // Ends at 0.50
 
         // Calculate velocity exactly like a real mouse movement
-        let dx = (x - prevX) * config.SPLAT_FORCE;
-        let dy = 0;
+        let dx1 = (x1 - prevX1) * config.SPLAT_FORCE;
+        let dy1 = (y1 - prevY1) * config.SPLAT_FORCE;
+        
+        let dx2 = (x2 - prevX2) * config.SPLAT_FORCE;
+        let dy2 = (y2 - prevY2) * config.SPLAT_FORCE;
 
         // Apply splat if we have a previous point to avoid a huge initial jump
-        if (prevX !== 0) {
-            splat(x, y, dx, dy, purple);
+        if (prevX1 !== 0) {
+            splat(x1, y1, dx1, dy1, color1);
+            splat(x2, y2, dx2, dy2, color2);
         }
 
-        prevX = x;
+        prevX1 = x1; prevY1 = y1;
+        prevX2 = x2; prevY2 = y2;
         requestAnimationFrame(animate);
     }
 
     setTimeout(animate, 500); // Small 500ms delay after load
+    
+    // Add interaction hint UI
+    let hint = document.createElement('div');
+    hint.id = "fluid-hint";
+    hint.innerHTML = '✨ Click & drag background to interact';
+    hint.style.position = 'fixed';
+    hint.style.bottom = '40px';
+    hint.style.left = '50%';
+    hint.style.transform = 'translateX(-50%)';
+    hint.style.color = 'var(--text-secondary, rgba(255,255,255,0.7))';
+    hint.style.background = 'var(--footer-bg, rgba(15, 6, 32, 0.8))';
+    hint.style.border = '1px solid rgba(167, 139, 250, 0.2)';
+    hint.style.padding = '10px 20px';
+    hint.style.borderRadius = '30px';
+    hint.style.fontFamily = 'inherit';
+    hint.style.fontSize = '14px';
+    hint.style.pointerEvents = 'none'; // So they can click through it!
+    hint.style.transition = 'opacity 1s ease';
+    hint.style.zIndex = '9999';
+    hint.style.opacity = '0';
+    document.body.appendChild(hint);
+    
+    // Fade in hint after animation almost finishes
+    setTimeout(() => { if (document.getElementById('fluid-hint')) hint.style.opacity = '1'; }, 2200);
 }
 
 // --- START ---
