@@ -68,8 +68,8 @@
 ───────────────────────────────────── */
 [data-theme="light"] {
   --bg:            #f7f3ff;
-  --bg-section:    rgba(247,243,255,0.98);
-  --bg-section-alt: rgba(237,233,254,0.95);
+  --bg-section:    #f7f3ff;
+  --bg-section-alt: #ede9fe;
   --card-bg:       #fafaff;
   --card-bg-hover: rgba(124,58,237,0.06);
 
@@ -145,7 +145,6 @@ a, button, input { user-select: auto; }
   z-index: -1;
   pointer-events: none; /* handled by window listeners in js */
 }
-[data-theme="light"] #canvas { opacity: 0.22; }
 
 .page {
   position: relative;

@@ -7,14 +7,14 @@
 
 // --- UTILS ---
 
-function isMobile () { return /Mobi|Android/i.test(navigator.userAgent); }
+function isMobile() { return /Mobi|Android/i.test(navigator.userAgent); }
 
-function scaleByPixelRatio (input) {
+function scaleByPixelRatio(input) {
     let pixelRatio = window.devicePixelRatio || 1;
     return Math.floor(input * pixelRatio);
 }
 
-function hashCode (s) {
+function hashCode(s) {
     if (s.length == 0) return 0;
     let hash = 0;
     for (let i = 0; i < s.length; i++) {
@@ -24,7 +24,7 @@ function hashCode (s) {
     return hash;
 }
 
-function wrap (value, min, max) {
+function wrap(value, min, max) {
     let range = max - min;
     if (range == 0) return min;
     return (value - min) % range + min;
@@ -39,8 +39,8 @@ const PALETTE = [
 ];
 let colorIndex = 0;
 
-function generateColor () {
-    let c = {...PALETTE[colorIndex % PALETTE.length]};
+function generateColor() {
+    let c = { ...PALETTE[colorIndex % PALETTE.length] };
     colorIndex++;
     return c;
 }
@@ -66,10 +66,10 @@ let config = {
     BACK_COLOR: { r: 15, g: 6, b: 32 },
     TRANSPARENT: false,
     BLOOM: false,
-    SUNRAYS: false, 
+    SUNRAYS: false,
 }
 
-function pointerPrototype () {
+function pointerPrototype() {
     this.id = -1;
     this.texcoordX = 0;
     this.texcoordY = 0;
@@ -87,7 +87,7 @@ let splatStack = [];
 
 // --- WEBGL INIT ---
 
-function getWebGLContext (canvas) {
+function getWebGLContext(canvas) {
     const params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
     let gl = canvas.getContext('webgl2', params);
     const isWebGL2 = !!gl;
@@ -118,7 +118,7 @@ function getWebGLContext (canvas) {
     return { gl, ext: { formatRGBA, formatRG, formatR, halfFloatTexType, supportLinearFiltering } };
 }
 
-function getSupportedFormat (gl, internalFormat, format, type) {
+function getSupportedFormat(gl, internalFormat, format, type) {
     if (!supportRenderTextureFormat(gl, internalFormat, format, type)) {
         switch (internalFormat) {
             case gl.R16F: return getSupportedFormat(gl, gl.RG16F, gl.RG, type);
@@ -129,7 +129,7 @@ function getSupportedFormat (gl, internalFormat, format, type) {
     return { internalFormat, format }
 }
 
-function supportRenderTextureFormat (gl, internalFormat, format, type) {
+function supportRenderTextureFormat(gl, internalFormat, format, type) {
     let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
@@ -147,7 +147,7 @@ const { gl, ext } = getWebGLContext(canvas);
 
 // --- SHADERS ---
 
-function compileShader (type, source, keywords) {
+function compileShader(type, source, keywords) {
     if (keywords) {
         let ks = '';
         keywords.forEach(v => ks += '#define ' + v + '\n');
@@ -162,7 +162,7 @@ function compileShader (type, source, keywords) {
     return sh;
 }
 
-function createProgram (v, f) {
+function createProgram(v, f) {
     let p = gl.createProgram();
     gl.attachShader(p, v);
     gl.attachShader(p, f);
@@ -173,7 +173,7 @@ function createProgram (v, f) {
     return p;
 }
 
-function getUniforms (p) {
+function getUniforms(p) {
     let u = [], c = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
     for (let i = 0; i < c; i++) {
         let n = gl.getActiveUniform(p, i).name;
@@ -355,19 +355,19 @@ const displaySSource = `
 // --- PROGRAM CLASS ---
 
 class Program {
-    constructor (v, f) {
+    constructor(v, f) {
         this.p = createProgram(v, f);
         this.u = getUniforms(this.p);
     }
-    bind () { gl.useProgram(this.p); }
+    bind() { gl.useProgram(this.p); }
 }
 
 class Material {
-    constructor (v, f) {
+    constructor(v, f) {
         this.v = v; this.f = f;
         this.p = []; this.a = null; this.u = [];
     }
-    setKeywords (k) {
+    setKeywords(k) {
         let h = 0; k.forEach(v => h += hashCode(v));
         let p = this.p[h];
         if (!p) {
@@ -379,7 +379,7 @@ class Material {
         this.u = getUniforms(p);
         this.a = p;
     }
-    bind () { gl.useProgram(this.a); }
+    bind() { gl.useProgram(this.a); }
 }
 
 const copyP = new Program(baseV, copyS);
@@ -415,7 +415,7 @@ const blit = (() => {
     }
 })();
 
-function createFBO (w, h, internalFormat, format, type, param) {
+function createFBO(w, h, internalFormat, format, type, param) {
     gl.activeTexture(gl.TEXTURE0);
     let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -428,12 +428,12 @@ function createFBO (w, h, internalFormat, format, type, param) {
     gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
     return {
-        texture, fbo, width: w, height: h, texelSizeX: 1.0/w, texelSizeY: 1.0/h,
+        texture, fbo, width: w, height: h, texelSizeX: 1.0 / w, texelSizeY: 1.0 / h,
         attach(id) { gl.activeTexture(gl.TEXTURE0 + id); gl.bindTexture(gl.TEXTURE_2D, texture); return id; }
     };
 }
 
-function createDoubleFBO (w, h, internalFormat, format, type, param) {
+function createDoubleFBO(w, h, internalFormat, format, type, param) {
     let f1 = createFBO(w, h, internalFormat, format, type, param);
     let f2 = createFBO(w, h, internalFormat, format, type, param);
     return {
@@ -444,7 +444,7 @@ function createDoubleFBO (w, h, internalFormat, format, type, param) {
     };
 }
 
-function getResolution (resolution) {
+function getResolution(resolution) {
     let aspectRatio = gl.drawingBufferWidth / gl.drawingBufferHeight;
     if (aspectRatio < 1) aspectRatio = 1.0 / aspectRatio;
     let min = Math.round(resolution);
@@ -455,7 +455,7 @@ function getResolution (resolution) {
 
 let dye, velocity, divergence, curl, pressure;
 
-function initFramebuffers () {
+function initFramebuffers() {
     let sRes = getResolution(config.SIM_RESOLUTION), dRes = getResolution(config.DYE_RESOLUTION);
     const t = ext.halfFloatTexType, rgba = ext.formatRGBA, rg = ext.formatRG, r = ext.formatR, f = ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
     dye = createDoubleFBO(dRes.width, dRes.height, rgba.internalFormat, rgba.format, t, f);
@@ -467,27 +467,27 @@ function initFramebuffers () {
 
 // --- LOGIC ---
 
-function splat (x, y, dx, dy, color) {
+function splat(x, y, dx, dy, color) {
     splatP.bind();
     gl.uniform1i(splatP.u.uTarget, velocity.read.attach(0));
     gl.uniform1f(splatP.u.aspectRatio, canvas.width / canvas.height);
     gl.uniform2f(splatP.u.point, x, y);
     gl.uniform3f(splatP.u.color, dx, dy, 0.0);
-    gl.uniform1f(splatP.u.radius, (config.SPLAT_RADIUS / 100.0) * (canvas.width > canvas.height ? canvas.width/canvas.height : 1));
+    gl.uniform1f(splatP.u.radius, (config.SPLAT_RADIUS / 100.0) * (canvas.width > canvas.height ? canvas.width / canvas.height : 1));
     blit(velocity.write); velocity.swap();
     gl.uniform1i(splatP.u.uTarget, dye.read.attach(0));
     gl.uniform3f(splatP.u.color, color.r, color.g, color.b);
     blit(dye.write); dye.swap();
 }
 
-function multipleSplats (amount) {
+function multipleSplats(amount) {
     for (let i = 0; i < amount; i++) {
         const c = generateColor(); c.r *= 10; c.g *= 10; c.b *= 10;
         splat(Math.random(), Math.random(), 1000 * (Math.random() - 0.5), 1000 * (Math.random() - 0.5), c);
     }
 }
 
-function step (dt) {
+function step(dt) {
     gl.disable(gl.BLEND);
     curlP.bind(); gl.uniform2f(curlP.u.texelSize, velocity.texelSizeX, velocity.texelSizeY); gl.uniform1i(curlP.u.uVelocity, velocity.read.attach(0)); blit(curl);
     vortP.bind(); gl.uniform2f(vortP.u.texelSize, velocity.texelSizeX, velocity.texelSizeY); gl.uniform1i(vortP.u.uVelocity, velocity.read.attach(0)); gl.uniform1i(vortP.u.uCurl, curl.attach(1)); gl.uniform1f(vortP.u.curl, config.CURL); gl.uniform1f(vortP.u.dt, dt); blit(velocity.write); velocity.swap();
@@ -500,16 +500,27 @@ function step (dt) {
     gl.uniform1i(advectP.u.uVelocity, velocity.read.attach(0)); gl.uniform1i(advectP.u.uSource, dye.read.attach(1)); gl.uniform1f(advectP.u.dissipation, config.DENSITY_DISSIPATION); blit(dye.write); dye.swap();
 }
 
-function render () {
+function render() {
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.enable(gl.BLEND);
     colorP.bind(); gl.uniform4f(colorP.u.color, config.BACK_COLOR.r / 255, config.BACK_COLOR.g / 255, config.BACK_COLOR.b / 255, 1.0); blit(null);
     displayM.bind(); gl.uniform2f(displayM.u.texelSize, 1.0 / gl.drawingBufferWidth, 1.0 / gl.drawingBufferHeight); gl.uniform1i(displayM.u.uTexture, dye.read.attach(0)); blit(null);
 }
 
 let lastUpdateTime = Date.now();
-function update () {
+function update() {
     const w = scaleByPixelRatio(canvas.clientWidth), h = scaleByPixelRatio(canvas.clientHeight);
     if (canvas.width != w || canvas.height != h) { canvas.width = w; canvas.height = h; initFramebuffers(); }
+
+    // Sync BACK_COLOR with actual theme
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+        config.BACK_COLOR = { r: 247, g: 243, b: 255 }; // Match light variable --bg
+        config.SPLAT_FORCE = 2000; // Even softer for light mode
+    } else {
+        config.BACK_COLOR = { r: 15, g: 6, b: 32 }; // Match dark variable --bg
+        config.SPLAT_FORCE = 3500;
+    }
+
     let now = Date.now(), dt = Math.min((now - lastUpdateTime) / 1000, 0.016666); lastUpdateTime = now;
     if (splatStack.length > 0) multipleSplats(splatStack.pop());
     pointers.forEach(p => { if (p.down && p.moved) { p.moved = false; splat(p.texcoordX, p.texcoordY, p.deltaX * config.SPLAT_FORCE, p.deltaY * config.SPLAT_FORCE, p.color); } });
@@ -558,9 +569,44 @@ window.addEventListener('touchmove', e => {
 
 window.addEventListener('touchend', () => { pointers[0].down = false; });
 
+// --- INTRO ANIMATION ---
+
+function introSwipe() {
+    const purple = PALETTE[0];
+    let startTime = Date.now();
+    const duration = 2000; // Slow, 2-second glide
+    let prevX = 0;
+
+    function animate() {
+        let now = Date.now();
+        let t = (now - startTime) / duration;
+        if (t > 1) return;
+
+        // Smooth cubic ease-out
+        let easedT = 1 - Math.pow(1 - t, 3);
+
+        let x = -0.30 + easedT * 0.8; // Start further left, glide 20% further
+        let y = 0.5; // Straight horizontal line
+
+        // Calculate velocity exactly like a real mouse movement
+        let dx = (x - prevX) * config.SPLAT_FORCE;
+        let dy = 0;
+
+        // Apply splat if we have a previous point to avoid a huge initial jump
+        if (prevX !== 0) {
+            splat(x, y, dx, dy, purple);
+        }
+
+        prevX = x;
+        requestAnimationFrame(animate);
+    }
+
+    setTimeout(animate, 500); // Small 500ms delay after load
+}
+
 // --- START ---
 
 initFramebuffers();
 displayM.setKeywords(['SHADING']);
-multipleSplats(10);
+introSwipe();
 update();
