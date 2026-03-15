@@ -14,7 +14,7 @@
   const STAR_COUNT = 200;
 
   function resize() {
-    W = canvas.width  = window.innerWidth;
+    W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
   }
 
@@ -124,9 +124,9 @@
    3. NAVBAR
    ============================================================ */
 (function initNavbar() {
-  const navbar    = document.getElementById('navbar');
+  const navbar = document.getElementById('navbar');
   const navToggle = document.getElementById('navToggle');
-  const navLinks  = document.getElementById('navLinks');
+  const navLinks = document.getElementById('navLinks');
   if (!navbar) return;
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
@@ -146,8 +146,8 @@
   });
   document.addEventListener('click', e => {
     if (navLinks?.classList.contains('open') &&
-        !navLinks.contains(e.target) &&
-        !navToggle?.contains(e.target)) {
+      !navLinks.contains(e.target) &&
+      !navToggle?.contains(e.target)) {
       closeMenu();
     }
   });
@@ -158,7 +158,7 @@
    4. PARALLAX — boss floats on scroll
    ============================================================ */
 (function initParallax() {
-  const boss   = document.getElementById('heroBoss');
+  const boss = document.getElementById('heroBoss');
   const nebula = document.querySelector('.hero-nebula');
   if (!boss) return;
   let ticking = false;
@@ -167,7 +167,7 @@
     ticking = true;
     requestAnimationFrame(() => {
       const sy = window.scrollY;
-      if (boss)   boss.style.transform   = `translateY(${sy * 0.1}px)`;
+      if (boss) boss.style.transform = `translateY(${sy * 0.1}px)`;
       if (nebula) nebula.style.transform = `translateY(${sy * 0.05}px)`;
       ticking = false;
     });
@@ -204,7 +204,7 @@
    ============================================================ */
 (function initScrollspy() {
   const sections = document.querySelectorAll('section[id]');
-  const links    = document.querySelectorAll('.nav-link');
+  const links = document.querySelectorAll('.nav-link');
   if (!sections.length) return;
   const obs = new IntersectionObserver(
     entries => entries.forEach(e => {
@@ -237,28 +237,55 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
    8. JOIN FORM SUBMISSION
    ============================================================ */
 (function initForm() {
-  const form      = document.getElementById('joinForm');
+  const form = document.getElementById('joinForm');
   const submitBtn = document.getElementById('submitBtn');
-  const toast     = document.getElementById('toast');
+  const toast = document.getElementById('toast');
   if (!form) return;
-  form.addEventListener('submit', e => {
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.textContent = '⏳ SENDING...';
-    submitBtn.disabled    = true;
-    setTimeout(() => {
-      submitBtn.textContent          = '✓ INVITE SENT!';
-      submitBtn.style.background     = '#00C853';
-      submitBtn.style.boxShadow      = '4px 4px 0 #007A30';
-      form.reset();
-      toast?.classList.add('show');
-      setTimeout(() => toast?.classList.remove('show'), 4500);
+    submitBtn.disabled = true;
+
+    // --- FORM STORAGE SETUP ---
+    // To store your form inputs, we are using Web3Forms (free & easy for static sites).
+    // 1. Go to https://web3forms.com/ and enter your email.
+    // 2. You will receive an Access Key in your email.
+    // 3. Replace 'YOUR_ACCESS_KEY_HERE' below with that key.
+    const WEB3FORMS_ACCESS_KEY = 'a346603f-0320-4efb-b0ea-928f52e8cb6e';
+
+    const formData = new FormData(form);
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        submitBtn.textContent = '✓ INVITE SENT!';
+        submitBtn.style.background = '#00C853';
+        submitBtn.style.boxShadow = '4px 4px 0 #007A30';
+        form.reset();
+        toast?.classList.add('show');
+        setTimeout(() => toast?.classList.remove('show'), 4500);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Submission Error:', error);
+      submitBtn.textContent = '❌ ERROR! TRY AGAIN';
+      submitBtn.style.background = '#FF2D78';
+      submitBtn.style.boxShadow = '4px 4px 0 #9B0033';
+    } finally {
       setTimeout(() => {
-        submitBtn.textContent      = '⚔ ENTER THE DUNGEON';
+        submitBtn.textContent = '⚔ ENTER THE DUNGEON';
         submitBtn.style.background = '';
-        submitBtn.style.boxShadow  = '';
-        submitBtn.disabled         = false;
+        submitBtn.style.boxShadow = '';
+        submitBtn.disabled = false;
       }, 3500);
-    }, 1000);
+    }
   });
 })();
 
@@ -284,7 +311,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     tx += (mx - tx) * 0.14;
     ty += (my - ty) * 0.14;
     trail.style.left = `${tx}px`;
-    trail.style.top  = `${ty}px`;
+    trail.style.top = `${ty}px`;
     requestAnimationFrame(animTrail);
   })();
 })();
@@ -298,7 +325,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     slot.addEventListener('click', () => {
       // In production, trigger a real file input
       const input = document.createElement('input');
-      input.type  = 'file';
+      input.type = 'file';
       input.accept = 'image/*,video/*';
       input.addEventListener('change', e => {
         const file = e.target.files[0];
@@ -306,15 +333,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const url = URL.createObjectURL(file);
         slot.innerHTML = '';
         if (file.type.startsWith('video/')) {
-          const vid  = document.createElement('video');
-          vid.src    = url;
+          const vid = document.createElement('video');
+          vid.src = url;
           vid.controls = true;
           vid.style.cssText = 'width:100%;height:100%;object-fit:cover;';
           slot.appendChild(vid);
         } else {
-          const img  = document.createElement('img');
-          img.src    = url;
-          img.alt    = 'Event photo';
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = 'Event photo';
           img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:4px;';
           slot.appendChild(img);
         }
@@ -331,7 +358,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
    11. KONAMI CODE EASTER EGG
    ============================================================ */
 (function initKonami() {
-  const SEQ = [38,38,40,40,37,39,37,39,66,65];
+  const SEQ = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
   let pos = 0;
   document.addEventListener('keydown', e => {
     pos = (e.keyCode === SEQ[pos]) ? pos + 1 : 0;
