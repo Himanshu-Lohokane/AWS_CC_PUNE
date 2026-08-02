@@ -1,5 +1,5 @@
 /* ============================================================
-   AWSCC ADYPSOE — styles.css (mobile-first, pixel-art)
+   AWS SBG ADYPSOE — styles.css (mobile-first, pixel-art)
    ============================================================ */
 :root {
   --bg-deep:    #0D0D1A;
@@ -51,7 +51,7 @@ button,input,textarea,select{font-family:inherit}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 1.25rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .nav-logo{display:flex;align-items:center;gap:.15rem;flex-shrink:0}
 .logo-cloud{display:flex;align-items:center}
-.logo-text{font-family:var(--px);font-size:.68rem;white-space:nowrap;letter-spacing:1px;color:#fff}
+.logo-text{font-family:var(--px);font-size:.68rem;white-space:nowrap;letter-spacing:1px;word-spacing:-3px;color:#fff}
 .logo-box{font-family:var(--px);font-size:.5rem;white-space:nowrap;letter-spacing:1px;color:var(--orange);border:2px solid var(--orange);padding:1px 5px;border-radius:3px;image-rendering:pixelated;box-shadow:2px 2px 0 rgba(255,153,0,0.3)}
 .nav-links{display:flex;align-items:center;gap:1.75rem}
 .nav-link{font-family:var(--px);font-size:.5rem;color:var(--lavender);position:relative;transition:color var(--tr);white-space:nowrap}
@@ -257,7 +257,7 @@ button,input,textarea,select{font-family:inherit}
 /* ============================================================ FOOTER */
 .footer{position:relative;z-index:2;background:#080813;border-top:2px solid var(--border);padding:3rem 1.25rem 0}
 .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
-.footer-logo-text{font-family:var(--px);font-size:.8rem;margin-bottom:.5rem;display:block}
+.footer-logo-text{font-family:var(--px);font-size:.8rem;margin-bottom:.5rem;display:block;word-spacing:-3px}
 .footer-college{color:var(--muted);font-size:.88rem;margin-bottom:.2rem}
 .footer-tagline{color:var(--orange);font-size:.8rem;margin-bottom:1.1rem}
 .footer-socials{display:flex;gap:.5rem;flex-wrap:wrap}
@@ -383,4 +383,229 @@ button,input,textarea,select{font-family:inherit}
   .hero-img{width:clamp(150px,70vw,210px);height:clamp(150px,70vw,210px)}
   .section-title{font-size:clamp(.9rem,6vw,1.4rem)}
   /* floaters already hidden via .floaters{display:none} above */
+}
+
+/* ============================================================
+   REGISTRATION PAGE — register.html
+   ============================================================ */
+
+/* ---- REG HERO ---- */
+.reg-hero{position:relative;z-index:2;background:var(--bg-dark);padding:5rem 1.25rem 4rem;overflow:hidden}
+.reg-hero-nebula{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 65% 60% at 50% 50%,rgba(255,45,120,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 25%,rgba(255,153,0,.07) 0%,transparent 55%)}
+.reg-hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.reg-hero-img-col{position:relative}
+.reg-event-img{width:100%;border-radius:4px;border:2px solid var(--border);object-fit:cover;max-height:400px;display:block}
+
+.reg-hero-meta{display:flex;flex-direction:column;gap:1.1rem;padding-top:.5rem}
+.reg-event-title{font-family:var(--px);font-size:clamp(.95rem,3.5vw,1.7rem);line-height:1.5;color:#fff}
+.reg-event-speaker{display:flex;align-items:center;gap:.5rem;font-size:1rem;color:var(--lavender)}
+.reg-event-speaker strong{color:var(--orange)}
+
+.reg-meta-chips{display:flex;flex-direction:column;gap:.55rem}
+.reg-chip{display:flex;align-items:center;gap:.55rem;font-size:.95rem;color:var(--lavender)}
+.reg-chip svg{flex-shrink:0}
+
+.reg-perks{display:flex;flex-direction:column;gap:.45rem;background:rgba(255,153,0,.05);border:1px solid rgba(255,153,0,.2);border-radius:4px;padding:.9rem 1.1rem}
+.reg-perks-label{font-family:var(--px);font-size:.42rem;color:var(--orange);margin-bottom:.3rem}
+.reg-perk{font-size:.92rem;color:var(--lavender);display:flex;align-items:flex-start;gap:.5rem}
+.reg-perk::before{content:'▸';color:var(--orange);flex-shrink:0;margin-top:1px}
+
+/* Fee badge */
+.fee-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--px);font-size:.52rem;color:var(--orange);background:rgba(255,153,0,.1);border:2px solid rgba(255,153,0,.4);border-radius:4px;padding:.4rem 1rem}
+
+/* ---- SEAT COUNTER ---- */
+.seat-counter-wrap{display:flex;flex-direction:column;gap:.5rem}
+.seat-counter-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.seat-count-num{font-family:var(--px);font-size:1rem;color:var(--pink)}
+.seat-count-label{font-size:.9rem;color:var(--muted)}
+.seat-bar-wrap{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.seat-bar{height:100%;background:linear-gradient(90deg,var(--pink),var(--orange));border-radius:3px;transition:width .6s ease;width:0%}
+.seat-counter-bottom{display:flex;align-items:center;justify-content:space-between}
+.seat-bottom-label{font-family:var(--px);font-size:.38rem;color:var(--muted)}
+.seat-remaining{font-family:var(--px);font-size:.52rem;color:var(--pink)}
+.seat-counter-wrap.urgent .seat-remaining{animation:bl .8s step-end infinite}
+
+/* ---- SEATS FULL BANNER ---- */
+.seats-full-banner{display:none;background:rgba(255,45,120,.1);border:2px solid var(--pink);border-radius:4px;padding:1.25rem;text-align:center;margin-bottom:1.5rem;box-shadow:var(--glow-pink)}
+.seats-full-banner.visible{display:block}
+.seats-full-title{font-family:var(--px);font-size:.6rem;color:var(--pink);margin-bottom:.4rem}
+
+/* ---- STEP INDICATOR ---- */
+.step-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:.5rem}
+.step-dot{width:38px;height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--px);font-size:.52rem;border:2px solid var(--border);background:var(--bg-card);color:var(--muted);transition:all .25s;flex-shrink:0;position:relative;z-index:1}
+.step-dot.active{border-color:var(--pink);color:var(--pink);box-shadow:0 0 14px rgba(255,45,120,.4)}
+.step-dot.done{border-color:#00C853;background:rgba(0,200,83,.1);color:#00C853}
+.step-connector{width:64px;height:2px;background:var(--border);transition:background .3s;flex-shrink:0}
+.step-connector.done{background:#00C853}
+.step-labels-row{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-bottom:1.75rem}
+.step-lbl-group{display:flex;flex-direction:column;align-items:center;width:38px}
+.step-lbl{font-family:var(--px);font-size:.32rem;color:var(--muted);text-align:center;line-height:1.7;white-space:nowrap;margin-top:.35rem;transition:color .25s}
+.step-lbl.active{color:var(--pink)}
+.step-lbl.done{color:#00C853}
+.step-lbl-spacer{width:64px;flex-shrink:0}
+
+/* ---- FORM STEPS ---- */
+.reg-form-section{position:relative;z-index:2;background:var(--bg-deep);overflow:hidden}
+.reg-form-section .join-bg-effect{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(255,45,120,.06) 0%,transparent 60%)}
+.form-steps-wrap{max-width:640px;margin:0 auto}
+.step-content{display:none}
+.step-content.active{display:block;animation:stepFadeIn .3s ease}
+@keyframes stepFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.step-heading{font-family:var(--px);font-size:.52rem;color:var(--lavender);margin-bottom:.4rem}
+.step-subtext{font-size:.95rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.7}
+
+/* ---- PAYMENT QR BLOCK ---- */
+.payment-qr-block{padding:1.5rem 1.75rem;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.qr-img-wrap{position:relative;padding:.3rem;background:#fff;border-radius:6px;border:3px solid var(--orange);box-shadow:0 0 28px rgba(255,153,0,.3),var(--glow-org);display:inline-block;margin-bottom:1rem}
+.qr-img{width:200px;height:200px;display:block;image-rendering:pixelated}
+.qr-amount-badge{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);background:var(--orange);color:#000;font-family:var(--px);font-size:.52rem;padding:4px 14px;border-radius:3px;white-space:nowrap}
+.upi-id-row{display:flex;flex-direction:column;align-items:center;gap:.4rem;width:100%}
+.upi-id-label{font-family:var(--px);font-size:.4rem;color:var(--muted)}
+.upi-id-wrap{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:4px;padding:.65rem 1.1rem}
+.upi-id-text{font-family:var(--px);font-size:.5rem;color:var(--lavender)}
+.copy-btn{background:transparent;border:1px solid var(--border);border-radius:3px;padding:5px 12px;cursor:pointer;font-family:var(--px);font-size:.38rem;color:var(--lavender);transition:all var(--tr);white-space:nowrap}
+.copy-btn:hover{border-color:var(--orange);color:var(--orange)}
+.copy-btn.copied{border-color:#00C853;color:#00C853}
+.payment-instructions{font-size:.93rem;color:var(--muted);line-height:1.8;text-align:left;width:100%;max-width:420px}
+.payment-instructions li{padding-left:1.2rem;position:relative;list-style:none}
+.payment-instructions li::before{content:'▸';color:var(--orange);position:absolute;left:0}
+.payment-instructions strong{color:var(--lavender)}
+.pay-btn-group{display:flex;flex-direction:column;gap:.65rem;width:100%}
+
+/* ---- UPLOAD ZONE ---- */
+.upload-zone{border:2px dashed var(--border);border-radius:4px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all .25s;background:rgba(255,255,255,.02);position:relative;overflow:hidden}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--pink);background:rgba(255,45,120,.04)}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone-icon{color:var(--lavender);margin-bottom:.65rem;display:flex;justify-content:center}
+.upload-zone-text{font-family:var(--px);font-size:.45rem;color:var(--lavender);margin-bottom:.3rem}
+.upload-zone-sub{font-size:.88rem;color:var(--muted)}
+.upload-preview{display:none;margin-top:.75rem;text-align:center}
+.upload-preview.visible{display:block}
+.upload-preview-img{max-height:130px;max-width:100%;border-radius:4px;border:2px solid #00C853;display:inline-block}
+.upload-filename{font-family:var(--px);font-size:.38rem;color:#00C853;margin-top:.4rem}
+.form-hint{font-size:.88rem;color:var(--muted);margin-top:.35rem;line-height:1.6}
+
+/* ---- SUCCESS SCREEN ---- */
+.reg-success{padding:2.5rem 2rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.success-icon{width:68px;height:68px;margin:0 auto;background:rgba(0,200,83,.08);border:2px solid #00C853;border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(0,200,83,.25)}
+.success-title{font-family:var(--px);font-size:clamp(.55rem,2.5vw,.72rem);color:#00C853;line-height:1.7;text-align:center}
+.success-msg{color:var(--lavender);font-size:.98rem;line-height:1.75;text-align:center;max-width:480px}
+/* Reference info card — 2-column grid */
+.success-ref{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.55rem;text-align:left}
+.success-ref-row{display:grid;grid-template-columns:80px 1fr;align-items:baseline;gap:.5rem}
+.success-ref-label{font-family:var(--px);font-size:.38rem;color:var(--muted);white-space:nowrap;padding-top:.1rem}
+.success-ref-value{font-size:.95rem;color:var(--orange);word-break:break-all;line-height:1.5}
+.success-ref .status-ok{color:#00C853;font-weight:700}
+.success-actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;width:100%}
+/* WhatsApp and Instagram colours */
+.success-wa-btn{background:linear-gradient(135deg,#1DA851,#25D366)!important;box-shadow:4px 4px 0 #0e6b2e!important;border-color:#1DA851!important}
+.success-ig-btn{border-color:#E1306C!important;color:#E1306C!important}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:900px){
+  .reg-hero-inner{grid-template-columns:1fr;gap:2rem}
+  .reg-event-img{max-height:280px}
+}
+@media(max-width:768px){
+  .reg-hero{padding:4rem 1.25rem 3rem}
+  .step-connector{width:40px}
+  .step-lbl-spacer{width:40px}
+  .step-lbl{font-size:.3rem}
+  .qr-img{width:170px;height:170px}
+  .payment-qr-block{padding:1.5rem 1rem}
+}
+@media(max-width:480px){
+  .step-labels-row{display:none}
+  .step-connector{width:28px}
+  .reg-event-title{font-size:clamp(.85rem,6vw,1.2rem)}
+  .success-actions{flex-direction:column;align-items:stretch}
+  .success-actions .btn{justify-content:center}
+}
+
+/* ── Rupee glyph fix: Press Start 2P lacks ₹, fall back to body font ── */
+.rupee-sign{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.05em;letter-spacing:0;vertical-align:baseline}
+
+/* ── Seat counter LIVE badge ── */
+.seat-live-badge{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--px);font-size:.33rem;color:#00C853}
+.seat-live-dot{width:7px;height:7px;border-radius:50%;background:#00C853;box-shadow:0 0 6px #00C853;animation:bl 1s step-end infinite;flex-shrink:0}
+
+/* ── Success screen community section ── */
+.success-community{width:100%;display:flex;flex-direction:column;gap:.75rem}
+.success-community-label{font-size:.93rem;color:var(--muted);line-height:1.7;text-align:center;margin:0}
+.success-community-label strong{color:var(--lavender)}
+.success-community-links{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:center}
+
+/* ============================================================
+   REGISTRATION — COMPREHENSIVE RESPONSIVE OVERHAUL
+   ============================================================ */
+
+/* Force form rows to single-column at mid-small sizes */
+@media(max-width:600px){
+  /* Hero */
+  .reg-hero-inner{grid-template-columns:1fr;gap:1.75rem}
+  .reg-event-img{max-height:240px;width:100%}
+  .reg-hero{padding:4.5rem 1rem 3rem}
+  .reg-hero-meta{gap:.85rem}
+  .reg-event-title{font-size:clamp(.85rem,5.5vw,1.3rem)}
+
+  /* Form rows → stack */
+  .form-row{grid-template-columns:1fr!important;gap:0}
+
+  /* Section container padding */
+  .reg-form-section .section-container{padding:2.5rem 1rem}
+
+  /* Step 1 card */
+  .join-form.pixel-card{padding:1.4rem 1.1rem!important}
+
+  /* Step 2 payment */
+  .payment-qr-block{padding:1.4rem 1rem;gap:1rem}
+  .qr-img-wrap{padding:.2rem}
+  .qr-img{width:155px;height:155px}
+  .qr-amount-badge{font-size:.42rem;padding:3px 10px}
+  .upi-id-wrap{flex-direction:column;align-items:flex-start;gap:.4rem}
+  .upi-id-text{font-size:.42rem;word-break:break-all}
+  .copy-btn{width:100%;text-align:center}
+  .pay-btn-group{gap:.5rem}
+  .pay-btn-group .btn{font-size:.38rem}
+
+  /* Fee badge */
+  .fee-badge{font-size:.42rem;padding:.35rem .75rem}
+
+  /* Step labels */
+  .step-labels-row{display:none}
+
+  /* Seat counter */
+  .seat-counter-top{gap:.5rem}
+  .seat-count-num{font-size:.85rem}
+
+  /* Upload zone */
+  .upload-zone{padding:1.5rem .75rem}
+
+  /* Success */
+  .reg-success{padding:1.75rem 1.1rem;gap:.85rem}
+  .success-community-links{flex-direction:column;align-items:stretch}
+  .success-community-links .btn{justify-content:center}
+  .success-ref-row{grid-template-columns:70px 1fr}
+  .success-ref-label{font-size:.33rem}
+
+  /* Perks */
+  .reg-perks{padding:.75rem .9rem}
+  .reg-perk{font-size:.88rem}
+
+  /* Meta chips */
+  .reg-chip{font-size:.9rem}
+
+  /* Section title */
+  .reg-form-section .section-title{font-size:clamp(.85rem,6vw,1.4rem)}
+}
+
+/* Ultra-small screens (SE, old Android) */
+@media(max-width:360px){
+  .reg-hero{padding:4rem .75rem 2.5rem}
+  .join-form.pixel-card{padding:1.1rem .85rem!important}
+  .step-dot{width:32px;height:32px;font-size:.42rem}
+  .step-connector{width:20px}
+  .qr-img{width:135px;height:135px}
+  .form-input,.form-select{font-size:.85rem}
+  .fee-badge{font-size:.38rem;padding:.3rem .6rem}
 }

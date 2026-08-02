@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Hands-on Expert Session | AWS Students Builder Group ADYPSOE</title>
+  <meta name="description"
+    content="Register for the Hands-on Expert Session by Ms. Afreen Bano — August 10, 2026 at ADYPSOE, Lohegaon. Limited to 100 students. ₹89 registration fee with live quiz and AWS goodies." />
+  <meta property="og:title" content="Hands-on Expert Session — AWS SBG ADYPSOE" />
+  <meta property="og:description" content="Register now. Limited to 100 seats. ₹89 fee." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon_io/site.webmanifest">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="pixel-particles" id="pixelParticles" aria-hidden="true"></div>
+
+  <!-- TICKER -->
+  <div class="ticker-bar" role="marquee">
+    <div class="ticker-track">
+      <span class="ticker-item">&#x1F3AB; HANDS-ON EXPERT SESSION &mdash; AUG 10, 2026</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F4CD; ADYPSOE, LOHEGAON &middot; 9:00 AM &ndash; 1:00 PM</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F3C6; LIVE QUIZ &middot; <span class="accent-orange">AWS GOODIES FOR TOP 3 WINNERS</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F381; SURPRISE GIFTS FOR ALL PARTICIPANTS</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F4B0; <span class="rupee-sign">₹</span>89 PER PARTICIPANT &middot; <span class="accent-pink">LIMITED TO 100 SEATS</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F3AB; HANDS-ON EXPERT SESSION &mdash; AUG 10, 2026</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F4CD; ADYPSOE, LOHEGAON &middot; 9:00 AM &ndash; 1:00 PM</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F3C6; LIVE QUIZ &middot; <span class="accent-orange">AWS GOODIES FOR TOP 3 WINNERS</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F381; SURPRISE GIFTS FOR ALL PARTICIPANTS</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">&#x1F4B0; <span class="rupee-sign">₹</span>89 PER PARTICIPANT &middot; <span class="accent-pink">LIMITED TO 100 SEATS</span></span>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Home">
+        <span class="logo-text">AWS SBG<span class="accent-pink">&middot;</span></span>
+        <span class="logo-box"
+          style="color:#FF9900;border-color:#FF9900;box-shadow:2px 2px 0 rgba(255,153,0,0.3);">ADYPSOE</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about" class="nav-link">ABOUT</a></li>
+        <li><a href="index.html#events" class="nav-link">EVENTS</a></li>
+        <li><a href="index.html#team" class="nav-link">TEAM</a></li>
+        <li><a href="index.html#community" class="nav-link">COMMUNITY</a></li>
+        <li><a href="#register" class="btn btn-primary nav-cta">REGISTER</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ======================================================= EVENT HERO -->
+  <section class="reg-hero" id="reg-hero">
+    <div class="reg-hero-nebula"></div>
+    <div class="reg-hero-inner">
+
+      <!-- Left: Image -->
+      <div class="reg-hero-img-col">
+        <div style="position:relative;">
+          <img src="assets/event_expert.png" alt="Hands-on Expert Session by Ms. Afreen Bano"
+            class="reg-event-img"
+            onerror="this.onerror=null;this.src='assets/event_upcoming.png'" />
+          <div class="event-badge badge-upcoming pixel-text">
+            <svg width="8" height="8" viewBox="0 0 4 4" fill="#000" aria-hidden="true">
+              <rect x="1" y="0" width="2" height="4" />
+              <rect x="0" y="1" width="4" height="2" />
+            </svg>
+            UPCOMING
+          </div>
+        </div>
+        <!-- Event type chip below image -->
+        <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+          <span class="event-type-chip pixel-text">Expert Session</span>
+          <span class="event-type-chip pixel-text">Hands-on</span>
+          <span class="event-type-chip pixel-text">Live Quiz</span>
+        </div>
+      </div>
+
+      <!-- Right: Meta -->
+      <div class="reg-hero-meta">
+        <div class="section-eyebrow pixel-text">// QUEST ALERT &mdash; AUG 2026</div>
+        <h1 class="reg-event-title">HANDS-ON<br /><span class="accent-pink">EXPERT SESSION</span><span
+            class="cursor-blink">_</span></h1>
+
+        <div class="reg-event-speaker">
+          <svg width="16" height="16" viewBox="0 0 8 8" fill="var(--pink)" aria-hidden="true">
+            <ellipse cx="4" cy="2.5" rx="2" ry="2.5" fill="var(--pink)" />
+            <rect x="0" y="5.5" width="8" height="2.5" rx="1" fill="var(--pink)" />
+          </svg>
+          Speaker: <strong>Ms. Afreen Bano</strong>
+        </div>
+
+        <div class="reg-meta-chips">
+          <div class="reg-chip">
+            <svg width="14" height="14" viewBox="0 0 8 8" fill="var(--orange)" aria-hidden="true">
+              <rect x="1" y="1" width="6" height="6" rx="0" fill="none" stroke="var(--orange)" stroke-width="1" />
+              <rect x="2" y="0" width="1" height="2" fill="var(--orange)" />
+              <rect x="5" y="0" width="1" height="2" fill="var(--orange)" />
+              <rect x="2" y="3" width="4" height="1" fill="var(--orange)" />
+            </svg>
+            August 10, 2026 &nbsp;&mdash;&nbsp; Monday
+          </div>
+          <div class="reg-chip">
+            <svg width="14" height="14" viewBox="0 0 8 8" fill="var(--orange)" aria-hidden="true">
+              <rect x="1" y="1" width="6" height="6" rx="0" fill="none" stroke="var(--orange)" stroke-width="1" />
+              <rect x="3" y="2" width="1" height="3" fill="var(--orange)" />
+              <rect x="3" y="4" width="2" height="1" fill="var(--orange)" />
+            </svg>
+            9:00 AM &ndash; 1:00 PM &nbsp;(4 Hours)
+          </div>
+          <div class="reg-chip">
+            <svg width="14" height="14" viewBox="0 0 6 8" fill="var(--orange)" aria-hidden="true">
+              <rect x="1" y="0" width="4" height="5" />
+              <polygon points="3,8 0,4 6,4" />
+            </svg>
+            ADYPSOE, Lohegaon, Pune
+          </div>
+        </div>
+
+        <div class="reg-perks">
+          <div class="reg-perks-label">PERKS &amp; ACTIVITIES</div>
+          <div class="reg-perk">Live quiz — <strong>AWS goodies for the top 3 winners</strong></div>
+          <div class="reg-perk">Surprise gifts for <strong>all participants</strong></div>
+          <div class="reg-perk">Industry expert guidance &amp; hands-on learning</div>
+        </div>
+
+        <!-- Fee + Seat Counter -->
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+          <div class="fee-badge">
+            <span class="rupee-sign" style="font-size:1rem;">₹</span>89 PER PARTICIPANT
+          </div>
+          <span class="event-type-chip pixel-text" style="border:1px solid rgba(255,45,120,.4);color:var(--pink);">MAX
+            100 SEATS</span>
+        </div>
+
+        <div class="seat-counter-wrap" id="seatCounterWrap">
+          <div class="seat-counter-top">
+            <div style="display:flex;align-items:center;gap:.6rem;">
+              <div style="font-family:var(--px);font-size:.4rem;color:var(--muted);">REGISTRATIONS</div>
+              <div class="seat-live-badge" id="seatLiveBadge">
+                <div class="seat-live-dot"></div>LIVE
+              </div>
+            </div>
+            <div>
+              <span class="seat-count-num" id="seatFilled">&#x2014;</span>
+              <span class="seat-count-label"> / 100 filled</span>
+            </div>
+          </div>
+          <div class="seat-bar-wrap">
+            <div class="seat-bar" id="seatBar"></div>
+          </div>
+          <div class="seat-counter-bottom">
+            <div class="seat-bottom-label">SPOTS REMAINING</div>
+            <div class="seat-remaining" id="seatRemaining">&#x2014;</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+          <a href="#register" class="btn btn-primary btn-lg" id="heroRegBtn">
+            <svg width="14" height="14" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+              <rect x="3" y="0" width="2" height="4" />
+              <rect x="0" y="3" width="8" height="2" />
+            </svg>
+            REGISTER NOW &mdash; <span class="rupee-sign">₹</span>89
+          </a>
+          <a href="index.html#events" class="btn btn-outline">
+            <svg width="14" height="14" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+              <polygon points="6,0 1,4 6,8" />
+            </svg>
+            ALL EVENTS
+          </a>
+        </div>
+      </div><!-- /.reg-hero-meta -->
+
+    </div><!-- /.reg-hero-inner -->
+  </section>
+
+  <!-- ======================================================= REGISTRATION SECTION -->
+  <section class="reg-form-section" id="register">
+    <div class="join-bg-effect"></div>
+    <div class="section-container" style="position:relative;z-index:1;">
+
+      <div class="section-eyebrow pixel-text center">// ENROLL NOW</div>
+      <h2 class="section-title center">SECURE YOUR<br /><span class="accent-pink">SPOT TODAY.</span></h2>
+      <p class="section-subtitle center">Register below &mdash; pay <span class="rupee-sign" style="font-size:1.05rem;">₹</span>89 via UPI, upload your proof, and you're in.</p>
+
+      <!-- Seats Full Banner -->
+      <div class="seats-full-banner" id="seatsBanner" role="alert">
+        <div class="seats-full-title">&#x26A0; ALL SEATS FILLED!</div>
+        <p style="color:var(--muted);font-size:.95rem;margin-top:.3rem;">All 100 seats have been taken. Follow our
+          <a href="https://www.instagram.com/aws.adypsoe/" target="_blank" rel="noopener"
+            style="color:var(--pink)">Instagram</a> for upcoming events.
+        </p>
+      </div>
+
+      <!-- STEP INDICATOR -->
+      <div class="step-indicator" id="stepIndicator" aria-label="Registration steps">
+        <div class="step-dot active" id="dot1" aria-label="Step 1: Your Details">1</div>
+        <div class="step-connector" id="conn1"></div>
+        <div class="step-dot" id="dot2" aria-label="Step 2: Pay ₹89">2</div>
+        <div class="step-connector" id="conn2"></div>
+        <div class="step-dot" id="dot3" aria-label="Step 3: Upload Proof">3</div>
+      </div>
+      <div class="step-labels-row" aria-hidden="true">
+        <div class="step-lbl-group">
+          <div class="step-lbl active" id="lbl1">YOUR<br />DETAILS</div>
+        </div>
+        <div class="step-lbl-spacer"></div>
+        <div class="step-lbl-group">
+          <div class="step-lbl" id="lbl2">PAY<br /><span class="rupee-sign">₹</span>89</div>
+        </div>
+        <div class="step-lbl-spacer"></div>
+        <div class="step-lbl-group">
+          <div class="step-lbl" id="lbl3">UPLOAD<br />PROOF</div>
+        </div>
+      </div>
+
+      <!-- FORM STEPS -->
+      <div class="form-steps-wrap">
+
+        <!-- ─── STEP 1: YOUR DETAILS ─────────────────────── -->
+        <div class="step-content active" id="step1">
+          <div class="join-form pixel-card" style="padding:2rem;">
+            <div class="step-heading">STEP 1 OF 3 &mdash; YOUR DETAILS</div>
+            <p class="step-subtext">Fill in your information. All fields are required.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label pixel-text" for="regName">FULL NAME</label>
+                <input class="form-input" type="text" id="regName" name="name" placeholder="Your full name..."
+                  required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label pixel-text" for="regEmail">EMAIL ADDRESS</label>
+                <input class="form-input" type="email" id="regEmail" name="email" placeholder="your@email.com"
+                  required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label pixel-text" for="regPhone">PHONE NUMBER</label>
+                <input class="form-input" type="tel" id="regPhone" name="phone" placeholder="10-digit mobile no."
+                  required autocomplete="tel" maxlength="10" pattern="[6-9][0-9]{9}" />
+              </div>
+              <div class="form-group">
+                <label class="form-label pixel-text" for="regYear">YEAR OF STUDY</label>
+                <select class="form-input form-select" id="regYear" name="year" required>
+                  <option value="">Select year...</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label pixel-text" for="regCollege">COLLEGE / DEPARTMENT</label>
+              <input class="form-input" type="text" id="regCollege" name="college"
+                placeholder="e.g. ADYPSOE — Computer Engineering" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label pixel-text" for="regReferral">HOW DID YOU HEAR ABOUT THIS EVENT?</label>
+              <select class="form-input form-select" id="regReferral" name="referral" required>
+                <option value="">Select a source…</option>
+                <option value="WhatsApp Community">WhatsApp Community</option>
+                <option value="Instagram (@aws.adypsoe)">Instagram (@aws.adypsoe)</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="College Notice Board">College Notice Board</option>
+                <option value="Friend / Classmate">Friend / Classmate</option>
+                <option value="Faculty / Professor">Faculty / Professor</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg btn-full" id="btnStep1">
+              NEXT: PAY <span class="rupee-sign">₹</span>89
+              <svg width="12" height="12" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                <polygon points="2,0 7,4 2,8" />
+              </svg>
+            </button>
+          </div>
+        </div><!-- /#step1 -->
+
+        <!-- ─── STEP 2: PAYMENT ───────────────────────────── -->
+        <div class="step-content" id="step2">
+          <div class="payment-qr-block pixel-card">
+            <div class="step-heading">STEP 2 OF 3 &mdash; PAY <span class="rupee-sign">₹</span>89 VIA UPI</div>
+
+            <div class="qr-img-wrap">
+              <img src="assets/upi_qr.png" alt="UPI QR Code — Pay ₹89 to AWS SBG ADYPSOE" class="qr-img"
+                id="qrCodeImg" />
+              <div class="qr-amount-badge">SCAN ME</div>
+            </div>
+
+            <ul class="payment-instructions">
+              <li>Open any UPI app &mdash; PhonePe, Google Pay, Paytm, or BHIM</li>
+              <li>Scan the QR code above</li>
+              <li>Pay exactly <strong><span class="rupee-sign">₹</span>89</strong> &mdash; write "AWS SBG Registration" in the note</li>
+              <li>Note the <strong>UTR&nbsp;/&nbsp;Transaction&nbsp;ID</strong> from your payment app</li>
+              <li>Take a <strong>screenshot</strong> of the success screen — you'll upload it next</li>
+            </ul>
+
+            <div class="pay-btn-group">
+              <button type="button" class="btn btn-primary btn-lg btn-full" id="btnStep2">
+                I'VE PAID &mdash; CONTINUE
+                <svg width="12" height="12" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                  <polygon points="2,0 7,4 2,8" />
+                </svg>
+              </button>
+              <button type="button" class="btn btn-outline btn-full" id="btnBackTo1">
+                <svg width="12" height="12" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                  <polygon points="6,0 1,4 6,8" />
+                </svg>
+                GO BACK
+              </button>
+            </div>
+          </div>
+        </div><!-- /#step2 -->
+
+        <!-- ─── STEP 3: PROOF OF PAYMENT ─────────────────── -->
+        <div class="step-content" id="step3">
+          <div class="join-form pixel-card" style="padding:2rem;">
+            <div class="step-heading">STEP 3 OF 3 &mdash; PROOF OF PAYMENT</div>
+            <p class="step-subtext">Upload your payment screenshot and enter the UTR number from your UPI app.</p>
+
+            <!-- Upload Zone -->
+            <div class="form-group">
+              <label class="form-label pixel-text" for="screenshotInput">PAYMENT SCREENSHOT</label>
+              <div class="upload-zone" id="uploadZone">
+                <input type="file" id="screenshotInput" accept="image/png,image/jpeg,image/webp,image/jpg"
+                  aria-label="Upload payment screenshot" />
+                <div class="upload-zone-icon">
+                  <svg width="36" height="36" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+                    <polygon points="9,1 3,8 7,8 7,13 11,13 11,8 15,8" />
+                    <rect x="2" y="14" width="14" height="2" />
+                    <rect x="2" y="13" width="2" height="3" />
+                    <rect x="14" y="13" width="2" height="3" />
+                  </svg>
+                </div>
+                <div class="upload-zone-text">DRAG &amp; DROP OR CLICK TO BROWSE</div>
+                <div class="upload-zone-sub">PNG, JPG, WEBP &mdash; Max 5&nbsp;MB</div>
+              </div>
+              <div class="upload-preview" id="uploadPreview">
+                <img class="upload-preview-img" id="previewImg" alt="Payment screenshot preview" />
+                <div class="upload-filename" id="previewFilename"></div>
+              </div>
+            </div>
+
+            <!-- UTR Input -->
+            <div class="form-group">
+              <label class="form-label pixel-text" for="regUtr">UTR / TRANSACTION ID</label>
+              <input class="form-input" type="text" id="regUtr" name="utr"
+                placeholder="e.g. 407123456789 or T2608XXXXXXX" required autocomplete="off"
+                style="letter-spacing:.5px;" />
+              <div class="form-hint">Find this under "Transaction Details" in your UPI app &mdash; it's usually 12&ndash;16 digits.</div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg btn-full" id="btnSubmit">
+              <svg width="14" height="14" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                <rect x="0" y="4" width="3" height="3" />
+                <rect x="2" y="5" width="6" height="2" transform="rotate(-45 2 5)" />
+              </svg>
+              SUBMIT REGISTRATION
+            </button>
+            <button type="button" class="btn btn-outline btn-full" id="btnBackTo2" style="margin-top:.65rem;">
+              <svg width="12" height="12" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                <polygon points="6,0 1,4 6,8" />
+              </svg>
+              GO BACK
+            </button>
+          </div>
+        </div><!-- /#step3 -->
+
+        <!-- ─── SUCCESS SCREEN ──────────────────────────── -->
+        <div class="step-content" id="stepSuccess">
+          <div class="reg-success pixel-card">
+
+            <!-- Icon -->
+            <div class="success-icon" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 20 20" fill="none">
+                <polyline points="4,10 8,14 16,6" stroke="#00C853" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Title -->
+            <div class="success-title" role="heading" aria-level="2">REGISTRATION RECEIVED!</div>
+
+            <!-- Short message -->
+            <p class="success-msg">
+              Your seat is <strong style="color:var(--orange)">reserved &mdash; pending payment verification</strong>.
+              Our team will confirm within <strong style="color:var(--lavender)">24 hours</strong>.
+            </p>
+
+            <!-- Reference card -->
+            <div class="success-ref" aria-label="Registration reference">
+              <div class="success-ref-row">
+                <span class="success-ref-label">NAME</span>
+                <span class="success-ref-value" id="successName">&mdash;</span>
+              </div>
+              <div class="success-ref-row">
+                <span class="success-ref-label">EMAIL</span>
+                <span class="success-ref-value" id="successEmail">&mdash;</span>
+              </div>
+              <div class="success-ref-row">
+                <span class="success-ref-label">UTR NO</span>
+                <span class="success-ref-value" id="successUtr">&mdash;</span>
+              </div>
+              <div class="success-ref-row">
+                <span class="success-ref-label">STATUS</span>
+                <span class="success-ref-value status-ok">PENDING VERIFICATION</span>
+              </div>
+            </div>
+
+            <!-- Community prompt -->
+            <div class="success-community">
+              <p class="success-community-label">
+                &#x1F4EC; You'll receive a <strong>confirmation email</strong> once payment is verified.
+                While you wait, join our communities for event updates:
+              </p>
+              <div class="success-community-links">
+                <a href="https://chat.whatsapp.com/Dp1pWeZUSmqLecTTHAdHNp" target="_blank" rel="noopener"
+                  class="btn btn-primary success-wa-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  JOIN WHATSAPP
+                </a>
+                <a href="https://www.instagram.com/aws.adypsoe/" target="_blank" rel="noopener"
+                  class="btn btn-outline success-ig-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  INSTAGRAM
+                </a>
+              </div>
+            </div>
+
+            <!-- Single action -->
+            <a href="index.html" class="btn btn-outline btn-full" style="justify-content:center;">
+              <svg width="12" height="12" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+                <polygon points="6,0 1,4 6,8" />
+              </svg>
+              BACK TO HOME
+            </a>
+
+          </div>
+        </div><!-- /#stepSuccess -->
+
+      </div><!-- /.form-steps-wrap -->
+    </div><!-- /.section-container -->
+  </section>
+
+  <!-- ======================================================= FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-text pixel-text">AWS SBG<span class="accent-pink">&middot;</span>ADYPSOE</div>
+        <p class="footer-college">Ajeenky D.Y. Patil School of Engineering</p>
+        <p class="footer-tagline">AWS Official Student Builder Group</p>
+        <div class="footer-socials">
+          <a href="https://chat.whatsapp.com/Dp1pWeZUSmqLecTTHAdHNp" target="_blank" rel="noopener"
+            class="footer-social" style="--sc:#25D366" title="WhatsApp" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/aws.adypsoe/" target="_blank" rel="noopener" class="footer-social"
+            style="--sc:#E1306C" title="Instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/111789072/" target="_blank" rel="noopener" class="footer-social"
+            style="--sc:#0A66C2" title="LinkedIn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="https://www.meetup.com/aws-cloud-club-at-ajeenky-d-y-patil-school-of-engineering/" target="_blank"
+            rel="noopener" class="footer-social" style="--sc:#ED1C40" title="Meetup" aria-label="Meetup">
+            <img src="assets/meetup_icon.png" alt="Meetup" width="16" height="16" style="border-radius:2px;" />
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title pixel-text">NAVIGATE</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#events">Events</a></li>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="index.html#community">Community</a></li>
+          <li><a href="index.html#join">Join Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title pixel-text">AWS RESOURCES</h4>
+        <ul class="footer-links">
+          <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier</a></li>
+          <li><a href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AWS Training</a></li>
+          <li><a href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">Certifications</a></li>
+          <li><a href="https://community.aws/" target="_blank" rel="noopener">Community</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy pixel-text">&copy; 2026 AWS SBG ADYPSOE &middot; MADE WITH &#x2601; + &hearts;</p>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive">
+    <svg width="16" height="16" viewBox="0 0 8 8" fill="#00C853" aria-hidden="true" id="toastIcon">
+      <rect x="0" y="4" width="3" height="3" />
+      <rect x="2" y="5" width="6" height="2" transform="rotate(-45 2 5)" />
+    </svg>
+    <span class="toast-msg" id="toastMsg">DONE!</span>
+  </div>
+
+  <!-- Supabase CDN (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- Shared site effects (starfield, navbar, cursor trail, etc.) -->
+  <script src="main.js"></script>
+  <!-- Registration-specific logic -->
+  <script src="register.js"></script>
+</body>
+
+</html>

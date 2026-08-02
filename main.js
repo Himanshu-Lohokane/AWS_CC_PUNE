@@ -1,5 +1,5 @@
 /* ============================================================
-   AWS CLOUD CLUBS ADYPSOE — main.js (revamped)
+   AWS STUDENTS BUILDER GROUP ADYPSOE — main.js (revamped)
    ============================================================ */
 'use strict';
 

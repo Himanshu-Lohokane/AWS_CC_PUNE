@@ -1,0 +1,394 @@
+/* ============================================================
+   AWS SBG ADYPSOE — register.js
+   Event Registration — Hands-on Expert Session (Aug 10, 2026)
+   Backend: Supabase (table: registrations, storage: payment-screenshots)
+   ============================================================ */
+'use strict';
+
+/* ── 1. SUPABASE CONFIG ────────────────────────────────────── */
+const SUPABASE_URL      = 'https://npbebikggnkkkuxrgqki.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wYmViaWtnZ25ra2t1eHJncWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2NjEzOTcsImV4cCI6MjEwMTIzNzM5N30.aJkmZXAdlbJiLUl_K4-ktwFD9V-o7XKvguuzWwv0PsI';
+const MAX_SEATS         = 100;
+const STORAGE_BUCKET    = 'payment-screenshots';
+
+let db;
+try {
+  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch (e) {
+  console.error('Supabase init failed:', e);
+}
+
+
+/* ── 2. SEAT COUNTER — fetch, render, realtime ─────────────── */
+let currentCount = 0;
+
+async function fetchSeatCount() {
+  if (!db) return;
+  try {
+    const { count, error } = await db
+      .from('registrations')
+      .select('*', { count: 'exact', head: true })
+      .in('payment_status', ['pending_verification', 'confirmed']);
+
+    if (!error && typeof count === 'number') {
+      currentCount = count;
+      renderSeatUI(currentCount);
+    }
+  } catch (err) {
+    console.warn('Seat count error:', err);
+  }
+}
+
+function renderSeatUI(filled) {
+  const remaining = Math.max(0, MAX_SEATS - filled);
+  const pct       = Math.min((filled / MAX_SEATS) * 100, 100);
+
+  const elFilled    = document.getElementById('seatFilled');
+  const elRemaining = document.getElementById('seatRemaining');
+  const elBar       = document.getElementById('seatBar');
+  const elWrap      = document.getElementById('seatCounterWrap');
+
+  if (elFilled)    elFilled.textContent    = filled;
+  if (elRemaining) elRemaining.textContent = remaining + ' left';
+  if (elBar)       elBar.style.width       = pct + '%';
+
+  /* Urgent pulse when ≤ 15 seats remain */
+  if (elWrap) {
+    elWrap.classList.toggle('urgent', remaining <= 15 && remaining > 0);
+  }
+
+  /* Trigger full state */
+  if (remaining <= 0) triggerSeatsFull();
+}
+
+function triggerSeatsFull() {
+  const banner = document.getElementById('seatsBanner');
+  if (banner && !banner.classList.contains('visible')) {
+    banner.classList.add('visible');
+    /* Disable form elements */
+    document.querySelectorAll('#step1 input, #step1 select, #btnStep1').forEach(el => {
+      el.disabled = true;
+    });
+    /* Update hero button */
+    const heroBtn = document.getElementById('heroRegBtn');
+    if (heroBtn) {
+      heroBtn.textContent = '— ALL SEATS TAKEN —';
+      heroBtn.classList.replace('btn-primary', 'btn-outline');
+      heroBtn.style.pointerEvents = 'none';
+      heroBtn.style.opacity = '0.6';
+    }
+  }
+}
+
+/* ── Realtime: listen to INSERT and UPDATE events ── */
+function initRealtime() {
+  if (!db) return;
+
+  db.channel('reg-seat-updates')
+    .on(
+      'postgres_changes',
+      { event: 'INSERT', schema: 'public', table: 'registrations' },
+      (payload) => {
+        console.log('↑ New registration inserted — refreshing seat count');
+        fetchSeatCount();
+      }
+    )
+    .on(
+      'postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'registrations' },
+      (payload) => {
+        /* Status change (e.g. pending → confirmed or rejected) may alter count */
+        console.log('↻ Registration updated — refreshing seat count');
+        fetchSeatCount();
+      }
+    )
+    .subscribe(status => {
+      const liveBadge = document.getElementById('seatLiveBadge');
+      if (status === 'SUBSCRIBED') {
+        console.log('✓ Realtime connected');
+        if (liveBadge) liveBadge.style.display = 'inline-flex';
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        console.warn('Realtime disconnected — polling fallback active');
+        if (liveBadge) liveBadge.style.display = 'none';
+      }
+    });
+}
+
+/* ── Polling fallback: every 30 seconds ── */
+setInterval(fetchSeatCount, 30_000);
+
+/* ── Initial load ── */
+fetchSeatCount();
+initRealtime();
+
+
+/* ── 3. STEP NAVIGATION ────────────────────────────────────── */
+let currentStep  = 1;
+let formData     = {};
+let uploadedFile = null;
+
+function goToStep(step) {
+  /* Hide all step panels */
+  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+
+  /* Target panel */
+  const targetId = step === 'success' ? 'stepSuccess' : 'step' + step;
+  const target   = document.getElementById(targetId);
+  if (target) target.classList.add('active');
+
+  /* Update dots, connectors, labels */
+  for (let i = 1; i <= 3; i++) {
+    const dot  = document.getElementById('dot'  + i);
+    const lbl  = document.getElementById('lbl'  + i);
+    const conn = document.getElementById('conn' + i);
+
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    if (lbl) lbl.classList.remove('active', 'done');
+
+    if (step === 'success' || (typeof step === 'number' && i < step)) {
+      dot.classList.add('done');
+      if (lbl) lbl.classList.add('done');
+    } else if (i === step) {
+      dot.classList.add('active');
+      if (lbl) lbl.classList.add('active');
+    }
+
+    if (conn) {
+      const isDone = step === 'success' || (typeof step === 'number' && i < step);
+      conn.classList.toggle('done', isDone);
+    }
+  }
+
+  /* On success: hide step indicator */
+  if (step === 'success') {
+    const indicator = document.getElementById('stepIndicator');
+    const labels    = document.querySelector('.step-labels-row');
+    if (indicator) indicator.style.display = 'none';
+    if (labels)    labels.style.display    = 'none';
+  }
+
+  currentStep = step;
+
+  /* Scroll to form section */
+  const formSection = document.getElementById('register');
+  if (formSection) {
+    const top = formSection.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+
+/* ── 4. STEP 1 — VALIDATE DETAILS ──────────────────────────── */
+document.getElementById('btnStep1')?.addEventListener('click', () => {
+  const name     = document.getElementById('regName')?.value.trim()    || '';
+  const email    = document.getElementById('regEmail')?.value.trim()   || '';
+  const phone    = document.getElementById('regPhone')?.value.trim()   || '';
+  const college  = document.getElementById('regCollege')?.value.trim() || '';
+  const year     = document.getElementById('regYear')?.value           || '';
+  const referral = document.getElementById('regReferral')?.value       || '';
+
+  if (!name || !email || !phone || !college || !year) {
+    showToast('⚠ PLEASE FILL ALL FIELDS!', 'error'); return;
+  }
+  if (!referral) {
+    showToast('⚠ PLEASE TELL US HOW YOU HEARD ABOUT THE EVENT!', 'error'); return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast('⚠ ENTER A VALID EMAIL ADDRESS!', 'error'); return;
+  }
+  if (!/^[6-9]\d{9}$/.test(phone.replace(/[\s\-]/g, ''))) {
+    showToast('⚠ ENTER A VALID 10-DIGIT PHONE!', 'error'); return;
+  }
+
+  formData = { name, email, phone, college, year, referral_source: referral };
+  goToStep(2);
+});
+
+
+/* ── 5. STEP 2 — PAYMENT NAVIGATION ────────────────────────── */
+document.getElementById('btnStep2')?.addEventListener('click', () => goToStep(3));
+document.getElementById('btnBackTo1')?.addEventListener('click', () => goToStep(1));
+
+
+/* ── 6. COPY UPI ID ────────────────────────────────────────── */
+document.getElementById('copyUpiBtn')?.addEventListener('click', () => {
+  const upiId = document.getElementById('upiIdText')?.textContent.trim() || '';
+  const btn   = document.getElementById('copyUpiBtn');
+  if (!btn) return;
+
+  const done = () => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2200);
+  };
+
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(upiId).then(done).catch(() => fallbackCopy(upiId, done));
+  } else {
+    fallbackCopy(upiId, done);
+  }
+});
+
+function fallbackCopy(text, cb) {
+  const ta = Object.assign(document.createElement('textarea'), {
+    value: text, style: 'position:fixed;opacity:0;'
+  });
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  cb();
+}
+
+
+/* ── 7. FILE UPLOAD HANDLING ───────────────────────────────── */
+const uploadZone      = document.getElementById('uploadZone');
+const fileInput       = document.getElementById('screenshotInput');
+const preview         = document.getElementById('uploadPreview');
+const previewImg      = document.getElementById('previewImg');
+const previewFilename = document.getElementById('previewFilename');
+
+fileInput?.addEventListener('change', e => handleFile(e.target.files?.[0]));
+
+uploadZone?.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone?.addEventListener('dragleave', ()  => uploadZone.classList.remove('drag-over'));
+uploadZone?.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  handleFile(e.dataTransfer?.files?.[0]);
+});
+
+function handleFile(file) {
+  if (!file) return;
+  const ALLOWED = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+  if (!ALLOWED.includes(file.type)) {
+    showToast('⚠ PLEASE UPLOAD PNG / JPG / WEBP IMAGE!', 'error'); return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('⚠ FILE TOO LARGE — MAX 5 MB!', 'error'); return;
+  }
+  uploadedFile = file;
+  const url = URL.createObjectURL(file);
+  if (previewImg)      previewImg.src          = url;
+  if (previewFilename) previewFilename.textContent = '✓ ' + file.name;
+  if (preview)         preview.classList.add('visible');
+}
+
+
+/* ── 8. STEP 3 — SUBMIT REGISTRATION ──────────────────────── */
+document.getElementById('btnSubmit')?.addEventListener('click', async () => {
+  const utr       = document.getElementById('regUtr')?.value.trim() || '';
+  const submitBtn = document.getElementById('btnSubmit');
+
+  if (!uploadedFile) {
+    showToast('⚠ PLEASE UPLOAD YOUR PAYMENT SCREENSHOT!', 'error'); return;
+  }
+  if (!utr || utr.length < 6) {
+    showToast('⚠ PLEASE ENTER YOUR UTR / TRANSACTION ID!', 'error'); return;
+  }
+  if (!db) {
+    showToast('⚠ CONNECTION ERROR — PLEASE RELOAD THE PAGE!', 'error'); return;
+  }
+
+  setSubmitLoading(submitBtn, true, '⏳ UPLOADING SCREENSHOT...');
+
+  try {
+    /* ── 8a. Upload screenshot → Supabase Storage ── */
+    const ext      = (uploadedFile.name.split('.').pop() || 'png').toLowerCase();
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}.${ext}`;
+
+    const { data: uploadData, error: uploadError } = await db.storage
+      .from(STORAGE_BUCKET)
+      .upload(fileName, uploadedFile, {
+        contentType: uploadedFile.type,
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (uploadError) throw new Error('Screenshot upload failed — please try again.');
+
+    const { data: urlData } = db.storage.from(STORAGE_BUCKET).getPublicUrl(uploadData.path);
+    const screenshotUrl = urlData?.publicUrl || '';
+
+    /* ── 8b. Insert registration row ── */
+    setSubmitLoading(submitBtn, true, '⏳ SUBMITTING...');
+
+    const payload = {
+      name:                   formData.name,
+      email:                  formData.email,
+      phone:                  formData.phone,
+      college:                formData.college,
+      year:                   formData.year,
+      referral_source:        formData.referral_source,
+      utr_number:             utr,
+      payment_screenshot_url: screenshotUrl,
+      payment_status:         'pending_verification',
+    };
+
+    let { error: insertError } = await db.from('registrations').insert(payload);
+
+    /* Fallback if referral_source column is missing in Supabase schema cache */
+    if (insertError && (insertError.message?.includes('referral_source') || insertError.message?.includes('schema cache') || insertError.code === 'PGRST204')) {
+      console.warn('referral_source column missing in DB schema — retrying without it');
+      delete payload.referral_source;
+      const retry = await db.from('registrations').insert(payload);
+      insertError = retry.error;
+    }
+
+    if (insertError) {
+      if (insertError.message?.includes('EVENT_FULL') || insertError.message?.includes('full')) {
+        triggerSeatsFull();
+        throw new Error('SORRY! All 100 seats are now taken. Registration closed.');
+      }
+      if (insertError.code === '23505') {
+        throw new Error('This email has already been registered!');
+      }
+      throw new Error('Registration failed — ' + (insertError.message || 'please try again.'));
+    }
+
+    /* ── 8c. SUCCESS ── */
+    document.getElementById('successName').textContent  = formData.name;
+    document.getElementById('successEmail').textContent = formData.email;
+    document.getElementById('successUtr').textContent   = utr;
+
+    fetchSeatCount();   /* immediately refresh counter */
+    goToStep('success');
+
+  } catch (err) {
+    console.error('Registration error:', err);
+    showToast('⚠ ' + (err.message || 'SOMETHING WENT WRONG — TRY AGAIN!'), 'error');
+    setSubmitLoading(submitBtn, false, 'SUBMIT REGISTRATION');
+  }
+});
+
+document.getElementById('btnBackTo2')?.addEventListener('click', () => goToStep(2));
+
+
+/* ── 9. HELPERS ────────────────────────────────────────────── */
+
+function setSubmitLoading(btn, loading, label) {
+  if (!btn) return;
+  btn.textContent    = label;
+  btn.disabled       = loading;
+  btn.style.opacity  = loading ? '0.7' : '1';
+  btn.style.cursor   = loading ? 'not-allowed' : '';
+}
+
+function showToast(message, type = 'success') {
+  const toast  = document.getElementById('toast');
+  const msgEl  = document.getElementById('toastMsg');
+  const iconEl = document.getElementById('toastIcon');
+  if (!toast || !msgEl) return;
+
+  msgEl.textContent = message;
+
+  const color = type === 'error' ? 'var(--pink)' : '#00C853';
+  toast.style.borderColor = color;
+  toast.style.color       = color;
+  if (iconEl) iconEl.setAttribute('fill', color);
+
+  toast.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove('show'), 4000);
+}
